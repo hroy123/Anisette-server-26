@@ -1,0 +1,25 @@
+{
+  "name": "anisette-v3-server",
+  "targetName": "anisette-server-26",
+  "description": "Anisette v3 server, minimal AltServer-Linux compatibility update",
+  "authors": ["Dadoum"],
+  "dependencies": {
+    "provision": {
+      "repository": "git+https://github.com/Dadoum/Provision.git",
+      "version": "7717ce1f7b3c9779fe9982005d07b6665071a239"
+    },
+    "slf4d": "~>2.1.1",
+    "vibe-d:web": "~>0.9.8",
+    "vibe-d:http": "~>0.9.8"
+  },
+  "configurations": [
+    {"name": "default", "targetType": "executable"},
+    {
+      "name": "static",
+      "targetType": "executable",
+      "lflags-linux-ldc": ["-lz"],
+      "dflags-ldc": ["--link-defaultlib-shared=false"],
+      "dflags-gdc": ["-defaultlib=:libgphobos.a"]
+    }
+  ]
+}
