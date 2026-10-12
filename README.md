@@ -52,16 +52,6 @@ Check the server using `curl -fsS http://127.0.0.1:6970 >/dev/null`, or see `doc
 
 **First use:** When refreshing or sideloading an app through AltStore for the first time, Apple may ask for a two-factor authentication (2FA) verification code. Normally, once the sign-in is verified, subsequent refreshes do not require another code. Apple may ask again if the authentication session expires, account security changes, or Anisette is reprovisioned with a new device identity.
 
-## Build directly (without Docker)
-
-With the D compiler, DUB, and development libraries installed:
-
-```bash
-DC=ldc2 dub build -c static --build-mode allAtOnce -b release --compiler=ldc2
-```
-
-The resulting executable is `anisette-server-26`.
-
 ## Acknowledgments
 
 - [Dadoum / anisette-v3-server](https://github.com/Dadoum/anisette-v3-server): original server and Docker/DUB implementation.
