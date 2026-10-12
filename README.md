@@ -50,6 +50,8 @@ export ALTSERVER_ANISETTE_SERVER=http://127.0.0.1:6970
 
 Check the server using `curl -fsS http://127.0.0.1:6970 >/dev/null`, or see `docker logs anisette-server-26`. Avoid publishing full Anisette responses or logs because they contain authentication-related values.
 
+**First use:** When refreshing or sideloading an app through AltStore for the first time, Apple may ask for a two-factor authentication (2FA) verification code. Normally, once the sign-in is verified, subsequent refreshes do not require another code. Apple may ask again if the authentication session expires, account security changes, or Anisette is reprovisioned with a new device identity.
+
 ### Existing deployments
 
 **Do not run the installer over an existing service without planning the migration.** It will refuse to reuse an occupied port or container name. Docker volumes need careful handling: the default mount preserves the `lib` subdirectory, but some device identity files can exist outside it. Recreating a container may generate a new device identity and require another Apple verification. Back up your data first and stop the old container only when ready.
