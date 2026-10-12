@@ -4,15 +4,18 @@ A minimal update of [Dadoum's anisette-v3-server](https://github.com/Dadoum/anis
 
 **Credit:** This project is based on Dadoum's work, not a new implementation. Most upstream code is unchanged.
 
-## Changes (September–October 2026)
+## September 2026 Apple authentication changes
 
-Apple authentication started rejecting the previously used client identity in some GrandSlam requests (HTTP 503). This version makes the `X-MMe-Client-Info` identity configurable with `ANISETTE_CLIENT_INFO`, updates the fallback identity, and retains the r2 device-initialization fix so a new device record is populated before the identity override is applied. The Apple serial-number header fallback was also changed to `C0FFFFFFFFFFFF`.
+Apple's September 2026 authentication changes caused several issues:
 
-The DUB executable and Docker image/container are standardized as `anisette-server-26`. The server continues listening on **6969** inside the container.
+- HTTP 503 responses from GrandSlam with the older Xcode client identity.
+- HTTP 429 responses when AltServer reused HTTP connections.
+- Failure to decrypt Apple's SPD authentication data using the older SRP key derivation.
+- Anisette device-identity and serial-header compatibility issues.
 
-These are deliberately small changes to Dadoum's server. **AltServer-Linux's separate HTTP 429, SRP, and SPD fixes are not part of this repository.** See the AltServer-Linux project for those changes.
+These issues were resolved with small, targeted updates to [Dadoum's anisette-v3-server](https://github.com/Dadoum/anisette-v3-server) and the separate AltServer/AltSign code; the HTTP 429 and SPD fixes are **not** part of this Anisette repository.
 
-Tested on an ARM64 Orange Pi with Docker and AltServer-Linux using a successful app refresh in October 2026. Apple may change its authentication requirements again.
+**Anisette-Server-26** was modified and tested with [AltServer-Linux-26](https://github.com/hroy123/AltServer-Linux-26) on an ARM64 Orange Pi, using Docker containers for both services. App refresh was successfully verified.
 
 ## Install on Linux with Docker
 
