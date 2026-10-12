@@ -28,7 +28,7 @@ chmod +x install-docker.sh
 ./install-docker.sh
 ```
 
-By default, the installer builds `anisette-server-26:latest`, names the container `anisette-server-26`, and exposes it only to the host at **127.0.0.1:6970** (container port 6969). It uses Docker volume `anisette-server-26-data` to retain its Anisette library data. The script refuses to replace existing containers or take an occupied port silently.
+By default, the installer builds `anisette-server-26:latest`, names the container `anisette-server-26`, and maps **port 6970 on the Orange Pi** (`127.0.0.1:6970`) to **port 6969 inside the Docker container**, where Anisette listens. AltServer running directly on the Orange Pi connects to `http://127.0.0.1:6970`; the `127.0.0.1` binding prevents access from other machines. It uses Docker volume `anisette-server-26-data` to retain its Anisette library data. The script refuses to replace existing containers or take an occupied port silently.
 
 For a different host port:
 
