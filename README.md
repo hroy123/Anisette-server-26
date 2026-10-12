@@ -6,16 +6,15 @@ A minimal update of [Dadoum's anisette-v3-server](https://github.com/Dadoum/anis
 
 ## September 2026 Apple authentication changes
 
-Apple's September 2026 authentication changes caused several issues:
+Apple's September 2026 authentication changes required small updates to Anisette:
 
-- HTTP 503 responses from GrandSlam with the older Xcode client identity.
-- HTTP 429 responses when AltServer reused HTTP connections.
-- Failure to decrypt Apple's SPD authentication data using the older SRP key derivation.
-- Anisette device-identity and serial-header compatibility issues.
+- GrandSlam HTTP 503 responses associated with the older Xcode client identity.
+- Updated Anisette client identity and device-initialization handling.
+- Updated Apple serial-number header fallback.
 
-These issues were resolved with small, targeted updates to [Dadoum's anisette-v3-server](https://github.com/Dadoum/anisette-v3-server) and the separate AltServer/AltSign code; the HTTP 429 and SPD fixes are **not** part of this Anisette repository.
+These issues were addressed through minimal changes to [Dadoum's anisette-v3-server](https://github.com/Dadoum/anisette-v3-server). Separate AltServer authentication fixes are documented in [AltServer-Linux-26](https://github.com/hroy123/AltServer-Linux-26).
 
-**Anisette-Server-26** was modified and tested with [AltServer-Linux-26](https://github.com/hroy123/AltServer-Linux-26) on an ARM64 Orange Pi, using Docker containers for both services. App refresh was successfully verified.
+**Anisette-Server-26** was tested with [AltServer-Linux-26](https://github.com/hroy123/AltServer-Linux-26) on an ARM64 Orange Pi. Anisette ran in Docker, and an AltStore app refresh completed successfully.
 
 ## Install on Linux with Docker
 
@@ -28,7 +27,7 @@ chmod +x install-docker.sh
 ./install-docker.sh
 ```
 
-By default, the installer builds `anisette-server-26:latest`, names the container `anisette-server-26`, and maps **port 6970** (`127.0.0.1:6970`) to **port 6969 inside the Docker container**, where Anisette listens. AltServer connects to `http://127.0.0.1:6970`.
+By default, the installer builds `anisette-server-26:latest`, names the container `anisette-server-26`, and maps **port 6970** (`127.0.0.1:6970`) to **port 6969 inside the Docker container**, where Anisette listens. AltServer running directly on the same Orange Pi connects to `http://127.0.0.1:6970`.
 
 **Automatic startup:** The installer uses Docker's `--restart unless-stopped` policy. Anisette will start automatically after a reboot, provided the Docker service starts at boot. If you manually stop the container, it will stay stopped until you start it again.
 
@@ -38,11 +37,7 @@ For a different host port:
 HOST_PORT=6971 ./install-docker.sh
 ```
 
-To override the Apple client identity (the configuration tested in October 2026):
-
-```bash
-ANISETTE_CLIENT_INFO='<Mac14,2> <macOS;15.7.5;24G624> <com.apple.AuthKit/1 (com.apple.akd/1.0)>' ./install-docker.sh
-```
+The Apple client identity can be customized using the `ANISETTE_CLIENT_INFO` environment variable; the installer already supplies the tested default.
 
 For AltServer running on the same machine:
 
@@ -52,7 +47,7 @@ export ALTSERVER_ANISETTE_SERVER=http://127.0.0.1:6970
 
 Check the server using `curl -fsS http://127.0.0.1:6970 >/dev/null`, or see `docker logs anisette-server-26`. Avoid publishing full Anisette responses or logs because they contain authentication-related values.
 
-**First use:** When refreshing or sideloading an app through AltStore for the first time, Apple may ask for a two-factor authentication (2FA) verification code. Normally, once the sign-in is verified, subsequent refreshes do not require another code. Apple may ask again if the authentication session expires, account security changes, or Anisette is reprovisioned with a new device identity.
+**First sign-in:** Apple may request a two-factor authentication (2FA) verification code when you first sign in through AltStore to refresh or sideload an app. Subsequent refreshes normally do not require another code, although Apple may request verification again if the session expires or the device identity changes.
 
 ## Acknowledgments
 
