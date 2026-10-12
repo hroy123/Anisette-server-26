@@ -1,6 +1,6 @@
 # Anisette-Server-26
 
-A minimal update of [Dadoum's anisette-v3-server](https://github.com/Dadoum/anisette-v3-server) to restore compatibility with the Apple authentication flow used by [AltServer-Linux](https://github.com/NyaMisty/AltServer-Linux) and [SideStore](https://github.com/SideStore/SideStore). The investigation was aided by [isideload](https://github.com/nab138/isideload) (Rust) and OpenAI's ChatGPT (AI-assisted debugging and documentation).
+This is a minimal update of [Dadoum's anisette-v3-server](https://github.com/Dadoum/anisette-v3-server) to restore compatibility with the Apple authentication flow used by [AltServer-Linux](https://github.com/NyaMisty/AltServer-Linux) and [SideStore](https://github.com/SideStore/SideStore). The investigation was aided by [isideload](https://github.com/nab138/isideload) (Rust) and OpenAI's ChatGPT (AI-assisted debugging and documentation). it is fully functional with with [AltServer-Linux-26](https://github.com/hroy123/AltServer-Linux-26) and was developed and tested on an ARM64 Orange Pi. 
 
 **Credit:** This project is based on Dadoum's work, not a new implementation. Most upstream code is unchanged.
 
