@@ -52,17 +52,6 @@ Check the server using `curl -fsS http://127.0.0.1:6970 >/dev/null`, or see `doc
 
 **First use:** When refreshing or sideloading an app through AltStore for the first time, Apple may ask for a two-factor authentication (2FA) verification code. Normally, once the sign-in is verified, subsequent refreshes do not require another code. Apple may ask again if the authentication session expires, account security changes, or Anisette is reprovisioned with a new device identity.
 
-### Existing deployments
-
-**Multiple installations:** Docker images can coexist without interfering with one another, including large temporary build images. To run multiple Anisette containers simultaneously, use different container names, host ports (for example, 6970 and 6971), and preferably separate data volumes. This installer uses the fixed name `anisette-server-26`, so a second installation requires adjusting the name in the script. If a container is recreated without preserving its device identity, Apple may request two-factor authentication again.
-
-To inspect existing containers:
-
-```bash
-docker ps -a
-docker volume ls
-```
-
 ## Build directly (without Docker)
 
 With the D compiler, DUB, and development libraries installed:
